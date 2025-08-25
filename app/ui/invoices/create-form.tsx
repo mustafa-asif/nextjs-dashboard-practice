@@ -74,7 +74,7 @@ export default function Form({ customers }: { customers: CustomerField[] }) {
                <div id='amount-error' aria-live='polite' aria-atomic='true' >
             {state.errors?.amount &&
              state.errors.amount.map((error: string)=>(
-              <p className='mt-2 test-sm text-red-500'>
+              <p className='mt-2 text-sm text-red-500'>
                 {error}
               </p>
             ))}
@@ -125,7 +125,7 @@ export default function Form({ customers }: { customers: CustomerField[] }) {
                <div id='status-error' aria-live='polite' aria-atomic='true' >
                 {state.errors?.status &&
                 state.errors.status.map((error: string)=>(
-                <p className='mt-2 test-sm text-red-500'>
+                <p className='mt-2 text-sm text-red-500'>
                  {error}
                 </p>
                ))}
@@ -134,7 +134,7 @@ export default function Form({ customers }: { customers: CustomerField[] }) {
         </fieldset>
         <div id='customer-error' aria-live='polite' aria-atomic='true' >
             {state.message && (
-              <p className='mt-2 test-sm text-red-500'>
+              <p className='mt-2 text-sm text-red-500'>
                 {state.message}
               </p>
             )}
