@@ -3,8 +3,12 @@ import { z } from 'zod';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import postgres from 'postgres';
+import { signIn } from '@/auth';
+import { AuthError } from 'next-auth';
 
 const sql = postgres(process.env.POSTGRESS_URl!, { ssl :'require'});
+
+
 
 const FormSchema=z.object({
   id: z.string(),
@@ -37,6 +41,31 @@ export type State={
     status?: string[];
   };
   message?: string | null;
+}
+
+//auth function to protect actions
+export async function authenticate(
+  prevState: string | undefined,
+  formData: FormData
+){
+  try {
+    await signIn('credentials',formData);
+    
+  } catch (error) {
+    if(error instanceof AuthError){
+      switch(error.type){
+        case 'CredentialsSignin':
+          return{
+            message: 'Invalid email or password',
+          };
+        default:
+          return{
+            message: 'Something went wrong.Please try again later',
+          };
+      }
+    }
+    throw error;
+  }
 }
 
 export async function createInvoice(prevState: State, formData: FormData){
